@@ -5,10 +5,9 @@ url = 'http://127.0.0.1:8000/predict'
 headers = {
     'accept': 'application/json',
 }
-
 files = {
-    'file': ('Test_folder/after_out.jpg', 
-             open('Test_folder/after_out.jpg', 'rb'), 
+    'file': ('Test_folder/Grape_Black_rot2.jpg', 
+             open('Test_folder/Grape_Black_rot2.jpg', 'rb'), 
              'image/jpeg')
 }
 

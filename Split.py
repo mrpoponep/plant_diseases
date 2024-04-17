@@ -1,6 +1,6 @@
 import os
 import shutil
-from sklearn.model_selection import train_test_split
+import random
 
 def split_and_save_data(data_folder, output_folder='split_data', test_size=0.2, random_state=42):
     # Create output folder for the split data
@@ -33,10 +33,28 @@ def split_and_save_data(data_folder, output_folder='split_data', test_size=0.2, 
 
     return os.path.join(output_folder, 'train'), os.path.join(output_folder, 'test')
 
+def create_folder(data_folder):
+    class_folders = [folder for folder in os.listdir(data_folder) if os.path.isdir(os.path.join(data_folder, folder))]
+    print(class_folders)
+    for i in class_folders:
+        new_folder=os.path.join(data_folder,"test",i)
+        print(new_folder)
+        os.makedirs(new_folder, exist_ok=True)
+
+def move_to_foler(data_dir):
+    class_folders = [folder for folder in os.listdir(data_folder) if os.path.isdir(os.path.join(data_folder, folder))]
+    class_folders.remove("Test")
+    class_folders.remove("Train")
+    print(class_folders)
+    for class_name in class_folders:
+        train_dir = os.path.join(data_dir, class_name)
+        os.rmdir(train_dir)
+        
+
 # Specify the path to your data folder
-data_folder = 'C:/code/pytorch_course/plant_disease/Data/Train/Rice'
+data_folder = 'C:/code/pytorch_course/plant_disease/Data'
 
 # Split the data into training and testing sets and save the sets to new directories
-train_folder, test_folder = split_and_save_data(data_folder)
-
+#train_folder, test_folder = split_and_save_data(data_folder)
+move_to_foler(data_folder)
 # The train_folder and test_folder variables contain the paths to the new directories

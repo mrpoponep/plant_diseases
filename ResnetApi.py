@@ -6,8 +6,10 @@ from config import class_names
 from fastapi.responses import JSONResponse
 import io
 
-model = torch.load('Model/resnet18_full.pth', map_location=torch.device('cpu'))
+model = torch.load('Model/resnet18_full_2.pth', map_location=torch.device('cuda'))
 model.eval()
+
+
 
 transform = transforms.Compose([
         transforms.Resize(256),
@@ -27,7 +29,7 @@ async def create_upload_file(file: UploadFile):
     image = Image.open(io.BytesIO(contents))
     image = image.convert('RGB')
     image_tensor = transform(image).unsqueeze(0)
-    
+    image_tensor = image_tensor.to("cuda")
     with torch.no_grad():
         output = model(image_tensor)
         predicted_class = torch.softmax(output, dim=1)
